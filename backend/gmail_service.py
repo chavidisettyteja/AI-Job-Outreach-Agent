@@ -15,19 +15,36 @@ SCOPES = [
 ]
 
 
-BASE_DIR = os.path.dirname(
-    os.path.dirname(os.path.abspath(__file__))
-)
+# BASE_DIR = os.path.dirname(
+#     os.path.dirname(os.path.abspath(__file__))
+# )
 
-CREDENTIALS_FILE = os.path.join(
-    BASE_DIR,
-    "credentials.json"
-)
+# CREDENTIALS_FILE = os.path.join(
+#     BASE_DIR,
+#     "credentials.json"
+# )
 
-TOKEN_FILE = os.path.join(
-    BASE_DIR,
-    "token.json"
-)
+# TOKEN_FILE = os.path.join(
+#     BASE_DIR,
+#     "token.json"
+# )
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+if os.path.exists("/etc/secrets/credentials.json"):
+    CREDENTIALS_FILE = "/etc/secrets/credentials.json"
+else:
+    CREDENTIALS_FILE = os.path.join(
+        os.path.dirname(BASE_DIR),
+        "credentials.json"
+    )
+
+if os.path.exists("/etc/secrets/token.json"):
+    TOKEN_FILE = "/etc/secrets/token.json"
+else:
+    TOKEN_FILE = os.path.join(
+        os.path.dirname(BASE_DIR),
+        "token.json"
+    )
 
 
 def get_gmail_service():
