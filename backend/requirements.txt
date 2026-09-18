@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+python-multipart
+pydantic
+python-dotenv
+groq
+pymupdf
+pandas
+openpyxl
+python-docx
+pytesseract
+Pillow
+google-api-python-client
+google-auth-httplib2
+google-auth-oauthlib

@@ -1,0 +1,13 @@
+Hiring AI Engineer
+
+ABC Technologies is looking for an AI Engineer.
+
+Required skills:
+Python
+FastAPI
+LangChain
+RAG
+
+Interested candidates can send their resume to YOUR_EMAIL@gmail.com
+
+Recruiter: Rahul
