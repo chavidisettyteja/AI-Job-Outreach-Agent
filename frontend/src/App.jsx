@@ -156,7 +156,8 @@ function App() {
     try {
 
       const response = await fetch(
-        "http://127.0.0.1:8000/analyze",
+        // "http://127.0.0.1:8000/analyze",
+        "https://ai-job-outreach-agent.onrender.com/",
         {
           method: "POST",
           body: formData
@@ -230,7 +231,8 @@ function App() {
     try {
 
       const response = await fetch(
-        "http://127.0.0.1:8000/analyze-text",
+        // "http://127.0.0.1:8000/analyze-text",
+        "https://ai-job-outreach-agent.onrender.com/analyze-text",
         {
           method: "POST",
 
@@ -407,7 +409,8 @@ function App() {
       // =====================================
 
       const response = await fetch(
-        "http://127.0.0.1:8000/send",
+        // "http://127.0.0.1:8000/send",
+        "https://ai-job-outreach-agent.onrender.com/send",
         {
           method: "POST",
 
