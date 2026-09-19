@@ -15,31 +15,30 @@ SCOPES = [
 ]
 
 
-# BASE_DIR = os.path.dirname(
-#     os.path.dirname(os.path.abspath(__file__))
-# )
+BASE_DIR = os.path.dirname(
+    os.path.abspath(__file__)
+)
 
-# CREDENTIALS_FILE = os.path.join(
-#     BASE_DIR,
-#     "credentials.json"
-# )
 
-# TOKEN_FILE = os.path.join(
-#     BASE_DIR,
-#     "token.json"
-# )
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# ==============================
+# LOCAL / RENDER CREDENTIAL PATH
+# ==============================
 
-if os.path.exists("/etc/secrets/credentials.json"):
-    CREDENTIALS_FILE = "/etc/secrets/credentials.json"
+RENDER_CREDENTIALS = "/etc/secrets/credentials.json"
+RENDER_TOKEN = "/etc/secrets/token.json"
+
+
+if os.path.exists(RENDER_CREDENTIALS):
+    CREDENTIALS_FILE = RENDER_CREDENTIALS
 else:
     CREDENTIALS_FILE = os.path.join(
         os.path.dirname(BASE_DIR),
         "credentials.json"
     )
 
-if os.path.exists("/etc/secrets/token.json"):
-    TOKEN_FILE = "/etc/secrets/token.json"
+
+if os.path.exists(RENDER_TOKEN):
+    TOKEN_FILE = RENDER_TOKEN
 else:
     TOKEN_FILE = os.path.join(
         os.path.dirname(BASE_DIR),
@@ -52,7 +51,6 @@ def get_gmail_service():
     creds = None
 
     if os.path.exists(TOKEN_FILE):
-
         creds = Credentials.from_authorized_user_file(
             TOKEN_FILE,
             SCOPES
@@ -76,15 +74,15 @@ def get_gmail_service():
             )
 
         with open(TOKEN_FILE, "w") as token:
-            token.write(creds.to_json())
+            token.write(
+                creds.to_json()
+            )
 
-    service = build(
+    return build(
         "gmail",
         "v1",
         credentials=creds
     )
-
-    return service
 
 
 def send_email(
@@ -112,9 +110,15 @@ def send_email(
         if mime_type is None:
             mime_type = "application/octet-stream"
 
-        main_type, sub_type = mime_type.split("/", 1)
+        main_type, sub_type = mime_type.split(
+            "/",
+            1
+        )
 
-        with open(attachment_path, "rb") as file:
+        with open(
+            attachment_path,
+            "rb"
+        ) as file:
 
             file_data = file.read()
 
@@ -122,20 +126,20 @@ def send_email(
             file_data,
             maintype=main_type,
             subtype=sub_type,
-            filename=os.path.basename(attachment_path)
+            filename=os.path.basename(
+                attachment_path
+            )
         )
 
     encoded_message = base64.urlsafe_b64encode(
         message.as_bytes()
     ).decode()
 
-    send_body = {
-        "raw": encoded_message
-    }
-
     result = service.users().messages().send(
         userId="me",
-        body=send_body
+        body={
+            "raw": encoded_message
+        }
     ).execute()
 
     return result
